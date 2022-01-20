@@ -3,11 +3,16 @@ plugins {
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'org.asciidoctor.convert' version '1.5.8'
     id 'java'
+
+    id 'jacoco'
 }
 
 group = 'com.siwony'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
+
+//*** build script 분할 ***//
+apply from: 'jacoco.gradle'
 
 configurations {
     compileOnly {
@@ -44,6 +49,9 @@ dependencies {
 test {
     outputs.dir snippetsDir
     useJUnitPlatform()
+
+    finalizedBy 'jacocoTestCoverageVerification'
+    finalizedBy 'jacocoTestReport'
 }
 
 asciidoctor {

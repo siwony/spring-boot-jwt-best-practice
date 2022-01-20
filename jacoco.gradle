@@ -1,0 +1,34 @@
+final testReport = "jacocoTestReport";
+final testCoverageVerification = 'jacocoTestCoverageVerification';
+
+jacoco{
+    toolVersion = '0.8.7'
+}
+
+jacocoTestReport{
+    reports {
+        html.enabled true
+        csv.enabled true
+        xml.enabled false
+    }
+}
+
+jacocoTestCoverageVerification{
+    violationRules{
+        rule{
+            enabled = true
+            element = "PACKAGE"
+
+            limit{
+                counter = 'LINE'
+                value = 'COVEREDRATIO'
+                minimum  = 0.70
+            }
+        }
+    }
+}
+
+
+
+
+
