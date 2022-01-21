@@ -37,7 +37,7 @@ public final class  MemberDto {
 
     @Getter
     @AllArgsConstructor
-    public final static class LoginDto{
+    public final static class Login {
         private final String email;
         private final String password;
     }
