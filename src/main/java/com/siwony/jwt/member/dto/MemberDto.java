@@ -25,7 +25,7 @@ public final class  MemberDto {
         @Pattern(regexp = "01(?:0|1|[6-9])(?:\\d{3}|\\d{4})\\d{4}$/")
         private final String phonenumber;
         
-        private Member toEntity(String encryptPassword){
+        public Member toEntity(String encryptPassword){
             return Member.builder()
                     .email(this.email)
                     .password(encryptPassword)
@@ -40,5 +40,12 @@ public final class  MemberDto {
     public final static class Login {
         private final String email;
         private final String password;
+    }
+
+    @Getter
+    @AllArgsConstructor
+    public final static class Credential{
+        private final String accessToken;
+        private final String refreshToken;
     }
 }
