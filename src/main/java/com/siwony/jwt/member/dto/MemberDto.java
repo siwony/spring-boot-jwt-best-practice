@@ -13,7 +13,9 @@ public final class  MemberDto {
     @AllArgsConstructor
     public final static class Join {
 
-        @Pattern(regexp = "^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$")
+        @Pattern(regexp = "^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$",
+                message = "Invalid email format."
+        )
         private final String email;
 
         @NotBlank
@@ -22,7 +24,9 @@ public final class  MemberDto {
         @NotBlank
         private final String name;
 
-        @Pattern(regexp = "01(?:0|1|[6-9])(?:\\d{3}|\\d{4})\\d{4}$/")
+        @Pattern(regexp = "01(?:0|1|[6-9])(?:\\d{3}|\\d{4})\\d{4}$/",
+            message = "Invalid phonenumber format"
+        )
         private final String phonenumber;
         
         public Member toEntity(String encryptPassword){
