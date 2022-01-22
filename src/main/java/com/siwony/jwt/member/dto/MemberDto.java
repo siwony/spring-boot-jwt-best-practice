@@ -2,14 +2,16 @@ package com.siwony.jwt.member.dto;
 
 import com.siwony.jwt.member.Member;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+import java.util.Collections;
 
 public final class  MemberDto {
 
-    @Getter
+    @Getter @Builder
     @AllArgsConstructor
     public final static class Join {
 
@@ -29,12 +31,13 @@ public final class  MemberDto {
         )
         private final String phonenumber;
         
-        public Member toEntity(String encryptPassword){
+        public Member toEntity(String encryptPassword, Member.Role role){
             return Member.builder()
                     .email(this.email)
                     .password(encryptPassword)
                     .name(this.name)
                     .phonenumber(this.phonenumber)
+                    .roles(Collections.singletonList(role))
                     .build();
         }
     }
