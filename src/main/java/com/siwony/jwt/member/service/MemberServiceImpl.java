@@ -23,7 +23,7 @@ public class MemberServiceImpl implements MemberService{
      */
     @Override
     public Member create(final MemberDto.Join joinDto) {
-        Member joinMember = joinDto.toEntity(passwordEncoder.encode(joinDto.getPassword()));
+        Member joinMember = joinDto.toEntity(passwordEncoder.encode(joinDto.getPassword()), Member.Role.CLIENT);
         return memberRepository.save(joinMember);
     }
 
@@ -34,9 +34,11 @@ public class MemberServiceImpl implements MemberService{
     @Override
     public MemberDto.Credential login(final MemberDto.Login loginDto) {
         final String email = loginDto.getEmail();
-        final String password = passwordEncoder.encode(loginDto.getPassword());
-        memberRepository.findByEmailAndPassword(email, password)
-                .orElseThrow(() -> new IllegalArgumentException("Incorrect email or password"));
+        Member member = memberRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("incorrect email"));
+
+        if(!passwordEncoder.matches(loginDto.getPassword(), member.getPassword()))
+            throw new IllegalArgumentException("incorrect password");
 
         return new MemberDto.Credential(null, null); //TODO access/refresh token 생성후 반환 할 예정
     }
