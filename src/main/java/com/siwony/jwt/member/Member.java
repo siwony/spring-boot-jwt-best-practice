@@ -21,7 +21,8 @@ public class Member {
         CLIENT, ADMIN
     }
 
-    @Id @Column(name = "member_id")
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "member_id")
     private Long memberIdx;
 
     @Column(name = "email")
