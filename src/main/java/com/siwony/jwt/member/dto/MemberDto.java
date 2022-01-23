@@ -11,6 +11,7 @@ public final class  MemberDto {
 
     @Getter @Builder
     @NoArgsConstructor(access = AccessLevel.PRIVATE) @AllArgsConstructor
+    @EqualsAndHashCode
     public final static class Join {
 
         @Pattern(regexp = "^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$",
