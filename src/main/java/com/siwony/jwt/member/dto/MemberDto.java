@@ -9,9 +9,8 @@ import java.util.Collections;
 
 public final class  MemberDto {
 
-    @Getter @Builder
+    @Getter @Builder @EqualsAndHashCode
     @NoArgsConstructor(access = AccessLevel.PRIVATE) @AllArgsConstructor
-    @EqualsAndHashCode
     public final static class Join {
 
         @Pattern(regexp = "^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$",
@@ -41,7 +40,7 @@ public final class  MemberDto {
         }
     }
 
-    @Getter
+    @Getter @EqualsAndHashCode
     @NoArgsConstructor(access = AccessLevel.PRIVATE) @AllArgsConstructor
     public final static class Login {
         private String email;
