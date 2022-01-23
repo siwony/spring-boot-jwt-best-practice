@@ -1,9 +1,7 @@
 package com.siwony.jwt.member.dto;
 
 import com.siwony.jwt.member.Member;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
@@ -12,24 +10,24 @@ import java.util.Collections;
 public final class  MemberDto {
 
     @Getter @Builder
-    @AllArgsConstructor
+    @NoArgsConstructor(access = AccessLevel.PRIVATE) @AllArgsConstructor
     public final static class Join {
 
         @Pattern(regexp = "^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$",
                 message = "Invalid email format."
         )
-        private final String email;
+        private String email;
 
         @NotBlank
-        private final String password;
+        private String password;
 
         @NotBlank
-        private final String name;
+        private String name;
 
         @Pattern(regexp = "01(?:0|1|[6-9])(?:\\d{3}|\\d{4})\\d{4}$/",
             message = "Invalid phonenumber format"
         )
-        private final String phonenumber;
+        private String phonenumber;
         
         public Member toEntity(String encryptPassword, Member.Role role){
             return Member.builder()
@@ -43,16 +41,16 @@ public final class  MemberDto {
     }
 
     @Getter
-    @AllArgsConstructor
+    @NoArgsConstructor(access = AccessLevel.PRIVATE) @AllArgsConstructor
     public final static class Login {
-        private final String email;
-        private final String password;
+        private String email;
+        private String password;
     }
 
     @Getter
-    @AllArgsConstructor
+    @NoArgsConstructor(access = AccessLevel.PRIVATE) @AllArgsConstructor
     public final static class Credential{
-        private final String accessToken;
-        private final String refreshToken;
+        private String accessToken;
+        private String refreshToken;
     }
 }
