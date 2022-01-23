@@ -13,6 +13,10 @@ sonarqube {
         property "sonar.projectKey", "siwony_spring-boot-jwt-best-practice"
         property "sonar.organization", "siwony"
         property "sonar.host.url", "https://sonarcloud.io"
+
+        property "sonar.java.coveragePlugin", "jacoco"
+        property "sonar.tests", "src/test"
+        property "sonar.coverage.jacoco.xmlReportPaths", "build/reports/jacoco/test/codeCoverageReport.xml"
     }
 }
 
@@ -47,7 +51,9 @@ dependencies {
     runtimeOnly 'com.h2database:h2'
 
     compileOnly 'org.projectlombok:lombok'
+    testCompileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+    testAnnotationProcessor 'org.projectlombok:lombok'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
