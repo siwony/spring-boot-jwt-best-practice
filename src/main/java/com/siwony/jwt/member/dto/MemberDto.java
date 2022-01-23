@@ -13,7 +13,7 @@ public final class  MemberDto {
     @NoArgsConstructor(access = AccessLevel.PRIVATE) @AllArgsConstructor
     public final static class Join {
 
-        @Pattern(regexp = "^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$",
+        @Pattern(regexp = "^[A-Za-z0-9+_.-]+@(.+)$",
                 message = "Invalid email format."
         )
         private String email;
