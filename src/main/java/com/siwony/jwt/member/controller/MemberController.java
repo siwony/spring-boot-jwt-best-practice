@@ -1,5 +1,6 @@
 package com.siwony.jwt.member.controller;
 
+import com.siwony.jwt.member.Member;
 import com.siwony.jwt.member.dto.MemberDto;
 import com.siwony.jwt.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/member")
@@ -19,11 +22,13 @@ public class MemberController {
     private final MemberService memberService;
 
     @PostMapping
-    private ResponseEntity<Void> join(@RequestBody MemberDto.Join joinDto){
-        memberService.create(joinDto);
+    private ResponseEntity<Map<String, String>> join(@RequestBody MemberDto.Join joinDto){
+        Member joinMember = memberService.create(joinDto);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(null);
+                .body(Map.of(
+                        "email", joinMember.getEmail())
+                );
     }
 
     @PostMapping("/login")
