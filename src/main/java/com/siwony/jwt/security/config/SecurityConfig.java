@@ -1,6 +1,7 @@
 package com.siwony.jwt.security.config;
 
 import com.siwony.jwt.security.jwt.filter.JwtAuthenticationFilter;
+import com.siwony.jwt.security.service.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,7 +27,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final UserDetailsService userDetailsService;
+        private final UserDetailsService userDetailsService;
 
     @Override @Profile({"test", "dev"})
     public void configure(WebSecurity webSecurity){
@@ -43,6 +44,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.httpBasic().disable();
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
+        http.authorizeHttpRequests()
+                .mvcMatchers("/member/join").permitAll()
+                .mvcMatchers("/member/login").permitAll();
     }
 
     @Override
