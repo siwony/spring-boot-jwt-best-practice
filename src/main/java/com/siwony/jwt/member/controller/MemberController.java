@@ -22,8 +22,8 @@ public class MemberController {
     private final MemberService memberService;
 
     @PostMapping
-    private ResponseEntity<Map<String, String>> join(@RequestBody MemberDto.Join joinDto){
-        Member joinMember = memberService.create(joinDto);
+    private ResponseEntity<Map<String, String>> join(@RequestBody final MemberDto.Join joinDto){
+        final Member joinMember = memberService.create(joinDto);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(Map.of(
@@ -32,8 +32,8 @@ public class MemberController {
     }
 
     @PostMapping("/login")
-    private ResponseEntity<Void> login(@RequestBody MemberDto.Login login){
-        MemberDto.Credential credential = memberService.login(login);
+    private ResponseEntity<Void> login(@RequestBody final MemberDto.Login login){
+        final MemberDto.Credential credential = memberService.login(login);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .headers(
@@ -41,6 +41,6 @@ public class MemberController {
                             httpHeaders.add(HttpHeaders.AUTHORIZATION, credential.getAccessToken());
                             httpHeaders.add("RefreshToken", credential.getRefreshToken());
                         }
-                ).body(null);
+                ).build();
     }
 }
