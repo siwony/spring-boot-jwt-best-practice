@@ -1,17 +1,20 @@
-package com.siwony.jwt.security.user_details.service;
+package com.siwony.jwt.security.service;
 
 
 import com.siwony.jwt.member.Member;
 import com.siwony.jwt.member.repository.MemberRepository;
-import com.siwony.jwt.security.user_details.UserDetailsImpl;
+import com.siwony.jwt.security.model.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+/**
+ * {@link org.springframework.security.core.userdetails.UserDetailsService} 구현체
+ */
 @RequiredArgsConstructor
 @Service
-public class UserDetailsServiceImpl implements org.springframework.security.core.userdetails.UserDetailsService {
+public class CustomUserDetailsService implements org.springframework.security.core.userdetails.UserDetailsService {
 
     private final MemberRepository memberRepository;
 
@@ -24,7 +27,7 @@ public class UserDetailsServiceImpl implements org.springframework.security.core
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         final Member member = memberRepository.findByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Member not found | username : " + username));
-        return new UserDetailsImpl(member);
+        return new CustomUserDetails(member);
     }
 
 }

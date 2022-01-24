@@ -1,4 +1,4 @@
-package com.siwony.jwt.security.user_details;
+package com.siwony.jwt.security.model;
 
 import com.siwony.jwt.member.Member;
 import lombok.RequiredArgsConstructor;
@@ -8,8 +8,11 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
+/**
+ * {@link org.springframework.security.core.userdetails.UserDetails} 구현체
+ */
 @RequiredArgsConstructor
-public class UserDetailsImpl implements org.springframework.security.core.userdetails.UserDetails {
+public class CustomUserDetails implements org.springframework.security.core.userdetails.UserDetails {
 
     private final Member member;
 
