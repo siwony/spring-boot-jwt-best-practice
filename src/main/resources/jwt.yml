@@ -1,0 +1,5 @@
+jwt:
+  secret: myJwtSecret
+  expiration:
+    accessToken: 7200 # 2시간
+    refreshToken: 2419200 # 4주
