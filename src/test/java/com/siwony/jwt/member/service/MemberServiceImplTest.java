@@ -31,7 +31,6 @@ class MemberServiceImplTest {
                 .name("siwony_")
                 .phonenumber("01001000100")
                 .build();
-        final PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 
         log.info("=== when ===");
         Member createdMember = memberService.create(joinDto);
