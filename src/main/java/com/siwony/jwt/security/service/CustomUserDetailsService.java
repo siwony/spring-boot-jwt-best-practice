@@ -9,9 +9,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-/**
- * {@link org.springframework.security.core.userdetails.UserDetailsService} 구현체
- */
 @RequiredArgsConstructor
 @Service
 public class CustomUserDetailsService implements org.springframework.security.core.userdetails.UserDetailsService {
@@ -24,10 +21,10 @@ public class CustomUserDetailsService implements org.springframework.security.co
      * @see Member
      */
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        final Member member = memberRepository.findByEmail(username)
-                .orElseThrow(() -> new UsernameNotFoundException("Member not found | username : " + username));
-        return new CustomUserDetails(member);
+    public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
+        return memberRepository.findByEmail(username)
+                .map(CustomUserDetails::new)
+                .orElseThrow(() -> new UsernameNotFoundException("Member not found | email : " + username));
     }
 
 }

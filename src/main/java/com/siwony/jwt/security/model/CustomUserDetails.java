@@ -8,9 +8,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
-/**
- * {@link org.springframework.security.core.userdetails.UserDetails} 구현체
- */
 @RequiredArgsConstructor
 public class CustomUserDetails implements org.springframework.security.core.userdetails.UserDetails {
 
