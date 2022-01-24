@@ -2,6 +2,9 @@ server:
   port: 8080
 
 spring:
+  config:
+    import: classpath:/jwt.yml
+
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:

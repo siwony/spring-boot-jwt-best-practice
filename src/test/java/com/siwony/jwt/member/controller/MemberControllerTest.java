@@ -3,16 +3,24 @@ package com.siwony.jwt.member.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.siwony.jwt.member.Member;
 import com.siwony.jwt.member.dto.MemberDto;
+import com.siwony.jwt.member.repository.MemberRepository;
 import com.siwony.jwt.member.service.MemberService;
+import com.siwony.jwt.security.config.SecurityConfig;
+import com.siwony.jwt.security.service.CustomUserDetailsService;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityFilterAutoConfiguration;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -32,7 +40,10 @@ class MemberControllerTest {
 
     @Autowired private ObjectMapper mapper;
 
-    @MockBean MemberService memberService;
+    @MockBean private UserDetailsService customUserDetailsService; // Security Configuration에서 error 발생하여 MockBean으로 등록
+
+    @MockBean private MemberService memberService;
+
 
     @SneakyThrows
     private void printRequestResponseResultHandler(MvcResult result) {
@@ -49,7 +60,7 @@ class MemberControllerTest {
     @SneakyThrows
     public void joinApiTest() {
         log.info("=== given ===");
-        final var url = "/member";
+        final var url = "/member/join";
         final var joinDto = MemberDto.Join.builder()
                 .email("siwon103305@gmail.com")
                 .password("password")
