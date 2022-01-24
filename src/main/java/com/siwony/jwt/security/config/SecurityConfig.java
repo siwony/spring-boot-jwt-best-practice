@@ -52,7 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public JwtAuthenticationFilter jwtAuthenticationFilter(){
-        return null; //TODO JWT token 인증/인가 필터 추가
+        return new JwtAuthenticationFilter(); //TODO JWT token 인증/인가 필터 추가
     }
 
     @Bean
