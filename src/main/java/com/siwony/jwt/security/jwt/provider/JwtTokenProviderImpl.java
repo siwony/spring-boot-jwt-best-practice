@@ -38,6 +38,7 @@ public class JwtTokenProviderImpl implements JwtTokenProvider{
         SecretKey secretKey = Keys.hmacShaKeyFor(Decoders.BASE64.decode(this.secretKey));
         return Jwts.builder()
                 .setSubject("https://github.com/siwony/spring-boot-jwt-best-practice")
+                .setIssuedAt(Date.from(Instant.now()))
                 .signWith(secretKey, SignatureAlgorithm.HS256);
     }
 
@@ -46,7 +47,6 @@ public class JwtTokenProviderImpl implements JwtTokenProvider{
     public String createAccessToken(final CustomUserDetails customUserDetails) {
         final Date date = new Date();
         return jwtBuilder()
-                .setIssuedAt(Date.from(Instant.now()))
                 .setExpiration(new Date(date.getTime() + accessTokenExpirationInMs))
                 .setId(String.valueOf(customUserDetails.getMember().getMemberIdx()))
                 .claim("email", customUserDetails.getUsername())
@@ -55,7 +55,10 @@ public class JwtTokenProviderImpl implements JwtTokenProvider{
 
     @Override
     public String createRefreshToken() {
-        return null
+        final Date date = new Date();
+        return jwtBuilder()
+                .setExpiration(new Date(date.getTime() + refreshTokenExpirationInMs))
+                .compact();
     }
 
     @Override
