@@ -21,7 +21,7 @@ spring:
 
 logging:
   level:
-    com.siwony.demo : debug
+    com.siwony.jwt : debug
 
   charset:
     console: UTF-8
