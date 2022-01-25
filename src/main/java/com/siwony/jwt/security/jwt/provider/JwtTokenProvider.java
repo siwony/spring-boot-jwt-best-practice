@@ -8,7 +8,7 @@ public interface JwtTokenProvider {
 
     String createRefreshToken();
 
-    String getMemberEmailFromJwt(String accessToken);
+    String getMemberEmailFromAccessToken(String accessToken);
 
-    long getExpiryDuration();
+    long getExpiryDurationInMs();
 }

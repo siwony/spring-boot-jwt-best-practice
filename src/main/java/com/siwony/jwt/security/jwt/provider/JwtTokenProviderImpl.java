@@ -1,9 +1,7 @@
 package com.siwony.jwt.security.jwt.provider;
 
 import com.siwony.jwt.security.model.CustomUserDetails;
-import io.jsonwebtoken.JwtBuilder;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
@@ -33,13 +31,16 @@ public class JwtTokenProviderImpl implements JwtTokenProvider{
         this.refreshTokenExpirationInMs = refreshTokenExpirationInSec * 1000;
     }
 
+    private SecretKey getSecretKey(){
+        return Keys.hmacShaKeyFor(Decoders.BASE64.decode(this.secretKey));
+    }
+
 
     private JwtBuilder jwtBuilder(){
-        SecretKey secretKey = Keys.hmacShaKeyFor(Decoders.BASE64.decode(this.secretKey));
         return Jwts.builder()
                 .setSubject("https://github.com/siwony/spring-boot-jwt-best-practice")
                 .setIssuedAt(Date.from(Instant.now()))
-                .signWith(secretKey, SignatureAlgorithm.HS256);
+                .signWith(getSecretKey(), SignatureAlgorithm.HS256);
     }
 
 
@@ -61,13 +62,20 @@ public class JwtTokenProviderImpl implements JwtTokenProvider{
                 .compact();
     }
 
-    @Override
-    public String getMemberEmailFromJwt(String accessToken) {
-        return null;
+    private JwtParser createTokenParser(){
+        return Jwts.parserBuilder()
+                .setSigningKey(getSecretKey())
+                .build();
     }
 
     @Override
-    public long getExpiryDuration() {
+    public String getMemberEmailFromAccessToken(String accessToken) {
+        final Jws<Claims> claimsJws = createTokenParser().parseClaimsJws(accessToken);
+        return claimsJws.getBody().get("email", String.class);
+    }
+
+    @Override
+    public long getExpiryDurationInMs() {
         return 0;
     }
 }
