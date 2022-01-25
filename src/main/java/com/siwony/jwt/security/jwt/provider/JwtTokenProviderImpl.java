@@ -2,18 +2,17 @@ package com.siwony.jwt.security.jwt.provider;
 
 import com.siwony.jwt.security.model.CustomUserDetails;
 import io.jsonwebtoken.*;
-import io.jsonwebtoken.io.Decoders;
-import io.jsonwebtoken.security.Keys;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import javax.crypto.SecretKey;
 import java.time.Instant;
 import java.util.Date;
 
 /**
  * JWT token을 생성한다.
  */
+@Slf4j
 @Component
 public class JwtTokenProviderImpl implements JwtTokenProvider{
 
@@ -26,21 +25,19 @@ public class JwtTokenProviderImpl implements JwtTokenProvider{
             @Value("${jwt.expiration.accessToken}") long accessTokenExpirationInSec,
             @Value("${jwt.expiration.refreshToken}") long refreshTokenExpirationInSec
     ){
+        log.debug("JWT secret = {}", secretKey);
+        log.debug("JWT accessToken expiration in sec = {}", accessTokenExpirationInSec);
+        log.debug("JWT refreshToken expiration int sec = {}", refreshTokenExpirationInSec);
         this.secretKey = secretKey;
         this.accessTokenExpirationInMs = accessTokenExpirationInSec * 1000;
         this.refreshTokenExpirationInMs = refreshTokenExpirationInSec * 1000;
     }
 
-    private SecretKey getSecretKey(){
-        return Keys.hmacShaKeyFor(Decoders.BASE64.decode(this.secretKey));
-    }
-
-
     private JwtBuilder jwtBuilder(){
         return Jwts.builder()
                 .setSubject("https://github.com/siwony/spring-boot-jwt-best-practice")
                 .setIssuedAt(Date.from(Instant.now()))
-                .signWith(getSecretKey(), SignatureAlgorithm.HS256);
+                .signWith(JwtTokenProvider.getSecretKey(this.secretKey), SignatureAlgorithm.HS256);
     }
 
 
@@ -64,7 +61,7 @@ public class JwtTokenProviderImpl implements JwtTokenProvider{
 
     private JwtParser createTokenParser(){
         return Jwts.parserBuilder()
-                .setSigningKey(getSecretKey())
+                .setSigningKey(JwtTokenProvider.getSecretKey(this.secretKey))
                 .build();
     }
 
