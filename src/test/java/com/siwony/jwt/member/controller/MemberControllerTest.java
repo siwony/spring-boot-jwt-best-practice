@@ -3,19 +3,12 @@ package com.siwony.jwt.member.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.siwony.jwt.member.Member;
 import com.siwony.jwt.member.dto.MemberDto;
-import com.siwony.jwt.member.repository.MemberRepository;
 import com.siwony.jwt.member.service.MemberService;
-import com.siwony.jwt.security.config.SecurityConfig;
-import com.siwony.jwt.security.service.CustomUserDetailsService;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
-import org.springframework.boot.autoconfigure.security.servlet.SecurityFilterAutoConfiguration;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpHeaders;
@@ -28,8 +21,8 @@ import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.Map;
 
-import static org.mockito.BDDMockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @Slf4j

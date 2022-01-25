@@ -1,7 +1,6 @@
 package com.siwony.jwt.security.config;
 
 import com.siwony.jwt.security.jwt.filter.JwtAuthenticationFilter;
-import com.siwony.jwt.security.service.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
