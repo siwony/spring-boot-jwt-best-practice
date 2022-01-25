@@ -1,6 +1,7 @@
 package com.siwony.jwt.security.model;
 
 import com.siwony.jwt.member.Member;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -11,6 +12,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CustomUserDetails implements org.springframework.security.core.userdetails.UserDetails {
 
+    @Getter
     private final Member member;
 
     @Override
