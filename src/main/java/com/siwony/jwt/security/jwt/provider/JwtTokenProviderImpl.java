@@ -75,7 +75,13 @@ public class JwtTokenProviderImpl implements JwtTokenProvider{
     }
 
     @Override
-    public long getExpiryDurationInMs() {
-        return 0;
+    public long getAccessTokenExpiryDurationInMs() {
+        return this.accessTokenExpirationInMs;
     }
+
+    @Override
+    public long getRefreshTokenExpiryDurationInMs() {
+        return this.refreshTokenExpirationInMs;
+    }
+
 }
